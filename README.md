@@ -3,12 +3,12 @@
 When Dropbox is syncing, it can use up all your CPU very quickly. Especially on a laptop, 
 the machine can get very hot and very slow.
 
-![Dropbox devours CPU](https://github.com/ryanlague/tame-dropbox.git/img/1_dropbox_195.png)
+![Dropbox devours CPU](https://github.com/ryanlague/tame_dropbox/blob/main/img/1_dropbox_195.png)
 
 This simple script limits the amount of CPU that Dropbox is allowed to use, so your computer remains useable while 
 Dropbox is syncing.
 
-![Dropbox Tamer set to 40%](https://github.com/ryanlague/tame-dropbox.git/img/1_dropbox_39.png)
+![Dropbox Tamer set to 40%](https://github.com/ryanlague/tame_dropbox/blob/main/img/2_dropbox_39.png)
 
 
 ## Installation
