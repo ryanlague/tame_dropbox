@@ -4,8 +4,6 @@ import os
 import logging
 import subprocess
 from argparse import ArgumentParser
-import threading
-import time
 
 
 """ This project makes use of:
