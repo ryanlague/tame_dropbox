@@ -1,8 +1,11 @@
+#!/usr/bin/env python3
 
 import os
 import logging
 import subprocess
 from argparse import ArgumentParser
+import threading
+import time
 
 
 """ This project makes use of:
@@ -11,7 +14,7 @@ http://www.willnolan.com/cputhrottle/cputhrottle.html
 """
 
 
-def run(cmd):
+def run_subproc(cmd):
     logging.debug(cmd)
     return subprocess.Popen([cmd], stdout=subprocess.PIPE, shell=True)
 
@@ -19,7 +22,7 @@ def run(cmd):
 def find_dropbox_procs():
     logging.info('Finding Dropbox procs')
     cmd = "ps -axc | grep -w Dropbox"
-    p = run(cmd)
+    p = run_subproc(cmd)
     lines = p.communicate()[0].decode('utf-8').strip().split('\n')
     procs = []
     for line in lines:
@@ -36,13 +39,13 @@ def limit_cpu(pid, percent, name='Dropbox'):
     percent = str(percent)
 
     cmd = f'./cputhrottle {pid} {percent}'
-    return run(cmd)
+    return run_subproc(cmd)
 
 
 def kill_old_procs():
     logging.info('Killing old Dropbox Tamer processes (if any)')
     cmd = 'pkill cputhrottle'
-    return run(cmd)
+    return run_subproc(cmd)
 
 
 def main(percent, verbosity='INFO', kill=False):
@@ -62,7 +65,8 @@ if __name__ == '__main__':
                         help='Percent of CPU power that Dropbox will be allowed to use')
 
     parser.add_argument('--kill', action='store_true', help='Kill the process and let Dropbox use the full CPU power')
-    parser.add_argument('-v', '--verbosity', default='INFO', type=str.upper, choices=['CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG'],
+    parser.add_argument('-v', '--verbosity', default='INFO', type=str.upper,
+                        choices=['CRITICAL', 'ERROR', 'WARNING', 'INFO', 'DEBUG'],
                         help='Verbosity level')
 
     args = parser.parse_args()
